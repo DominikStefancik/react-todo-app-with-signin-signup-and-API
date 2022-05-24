@@ -1,10 +1,20 @@
 import React, { useEffect, useRef, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { Title } from '../styled/Title';
 import { Button } from '../styled/Button';
 import { LayoutProps } from '../types';
 import { ErrorMessage, Form, Input } from './styled/Form';
+import axios from '../../api/axios';
+import { API_LOGIN_PATH } from '../../api/url';
+import useAuth from '../../hooks/useAuth';
+import { APP_DASHBOARD_PATH } from '../../url';
 
-const SigninForm = ({ isSignInForm }: LayoutProps) => {
+const SignInForm = ({ isSignInForm }: LayoutProps) => {
+  // when we scuccessfully authenticate, we will set our new authUser state by calling the 'setAuthUser' function
+  const { setAuthUser } = useAuth();
+
+  const navigate = useNavigate();
+
   // it allows to get focus on the email input field when the components loads
   const emailInputRef = useRef<HTMLInputElement>(null);
   // it allows to get focus on a field with an error
@@ -37,6 +47,40 @@ const SigninForm = ({ isSignInForm }: LayoutProps) => {
 
   const handleSubmit = async (event: React.FormEvent) => {
     event.preventDefault();
+
+    try {
+      // send request to the backend
+      const response = await axios.post(
+        API_LOGIN_PATH,
+        JSON.stringify({
+          email,
+          password,
+        })
+      );
+
+      const accessToken = response.data.access;
+      const refreshToken = response.data.refresh;
+
+      // if the login was successful, store user information and the token received for him in the global context
+      setAuthUser!({ email, password, accessToken, refreshToken });
+
+      // after the login was successful, clear out email and password fields
+      setEmail('');
+      setPassword('');
+
+      // lastly, navigate away to the dashboard page
+      navigate(APP_DASHBOARD_PATH, { replace: true });
+    } catch (error: any) {
+      // we haven't heard from the server at all (maybe we lost an Internet connection)
+      if (!error?.response) {
+        setErrorMessage('No Server Response');
+        return;
+      } else {
+        setErrorMessage(error.response.data.detail);
+      }
+      // when an error occured after submitting the form we want a focus to be on the error
+      errorRef.current?.focus();
+    }
   };
 
   return (
@@ -69,4 +113,4 @@ const SigninForm = ({ isSignInForm }: LayoutProps) => {
   );
 };
 
-export default SigninForm;
+export default SignInForm;

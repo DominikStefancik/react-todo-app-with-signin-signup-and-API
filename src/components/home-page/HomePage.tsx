@@ -2,8 +2,8 @@ import React, { useEffect } from 'react';
 import { GhostButton } from '../styled/Button';
 import { Container } from '../styled/Container';
 import { Title } from '../styled/Title';
-import SigninForm from './SigninForm';
-import SignupForm from './SignupForm';
+import SignInForm from './SignInForm';
+import SignUpForm from './SignUpForm';
 import { Overlay, OverlayContainer } from './styled/OverlayContainer';
 import { LeftOverlayPanel, Paragraph, RightOverlayPanel } from './styled/OverlayPanel';
 import { SignInContainer } from './styled/SignInContainer';
@@ -20,10 +20,10 @@ const HomePage = () => {
   return (
     <Container>
       <SignUpContainer isSignInForm={isSignInForm}>
-        <SignupForm isSignInForm={isSignInForm} />
+        <SignUpForm isSignInForm={isSignInForm} />
       </SignUpContainer>
       <SignInContainer isSignInForm={isSignInForm}>
-        <SigninForm isSignInForm={isSignInForm} />
+        <SignInForm isSignInForm={isSignInForm} />
       </SignInContainer>
       <OverlayContainer isSignInForm={isSignInForm}>
         <Overlay isSignInForm={isSignInForm}>
