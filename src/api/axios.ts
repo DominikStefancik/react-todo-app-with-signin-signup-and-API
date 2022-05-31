@@ -10,6 +10,13 @@ export const getBearerTokenString = (token: string | undefined) => {
   return `Bearer ${token || ''}`;
 };
 
+export const getRequestConfig = (controller: AbortController, token: string | undefined) => {
+  return {
+    headers: { [Header.Authorization]: getBearerTokenString(token) },
+    signal: controller.signal, // this will allow us to cancel the request
+  };
+};
+
 // this is used for calls in the poblis zones (e.g. the register and login screen)
 export default axios.create({
   baseURL: API_BASE_URL,

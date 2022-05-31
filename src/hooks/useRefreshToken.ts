@@ -1,5 +1,5 @@
 import axios from '../api/axios';
-import { REFRESH_TOKEN_PATH } from '../api/url';
+import { API_REFRESH_TOKEN_PATH } from '../api/url';
 import useAuth from './useAuth';
 
 // this hook is used when user's access token expires and we need to refresh it
@@ -8,7 +8,7 @@ const useRefreshToken = () => {
 
   const refreshToken = async () => {
     const response = await axios.post(
-      REFRESH_TOKEN_PATH,
+      API_REFRESH_TOKEN_PATH,
       JSON.stringify({
         refresh: authUser?.refreshToken,
       })

@@ -10,5 +10,5 @@ export const Container = styled.div<ContainerProps>`
   overflow: hidden;
   width: ${(props) => props.width || '878px'};
   max-width: 100%;
-  min-height: 600px;
+  min-height: ${(props) => props.minHeight || '600px'};
 `;
