@@ -1,6 +1,6 @@
 # React Todo App with Signin/Signup functionality and calling an external API
 
-A simple Todo app with the functionality of creating new users and signing in with an existing account. The app uses an external API for the user and todo management.
+A simple Todo app with the functionality of creating new users and signing in with an existing account. The app uses an external API for the user login, registration and authentication and the management of todo list.
 
 The example uses React with Typescript for implementing the user interface and Axios for calling the API.
 
