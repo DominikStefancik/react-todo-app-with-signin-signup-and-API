@@ -11,7 +11,7 @@ const Header = () => {
 
   const signout = () => {
     // before we navigate to the signout page, clear user's data
-    authUser && setAuthUser!({ email: '', password: '', accessToken: '', refreshToken: '' });
+    authUser && setAuthUser!({});
     navigate(`${APP_HOME_PATH}${APP_SIGNOUT_PATH}`, { replace: true });
   };
 

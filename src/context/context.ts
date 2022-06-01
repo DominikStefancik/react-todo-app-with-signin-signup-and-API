@@ -2,7 +2,6 @@ import { createContext } from 'react';
 
 type UserContext = Partial<{
   email: string;
-  password: string;
   accessToken: string;
   refreshToken: string;
 }>;

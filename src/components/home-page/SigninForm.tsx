@@ -62,7 +62,7 @@ const SignInForm = ({ isSignInForm }: LayoutProps) => {
       const refreshToken = response.data.refresh;
 
       // if the login was successful, store user information and the token received for him in the global context
-      setAuthUser!({ email, password, accessToken, refreshToken });
+      setAuthUser!({ email, accessToken, refreshToken });
 
       // after the login was successful, clear out email and password fields
       setEmail('');

@@ -14,6 +14,7 @@ import RequiredAuth from './components/auth/RequiredAuth';
 import NotFoundPage from './components/not-found/NotFoundPage';
 import Dashboard from './components/dashboard/Dashboard';
 import Layout from './components/layout/Layout';
+import PersistentSignIn from './components/auth/PersistentSignIn';
 
 function App() {
   return (
@@ -24,9 +25,12 @@ function App() {
         <Route path={APP_SIGNUP_SUCCESS_PATH} element={<SignupSuccessPage />} />
         <Route path={APP_SIGNOUT_PATH} element={<SignoutPage />} />
 
-        {/* Private routes */}
-        <Route element={<RequiredAuth />}>
-          <Route path={APP_DASHBOARD_PATH} element={<Dashboard />} />
+        {/* We want to use persisting the user state only in the protected routes */}
+        <Route element={<PersistentSignIn />}>
+          {/* Protected routes */}
+          <Route element={<RequiredAuth />}>
+            <Route path={APP_DASHBOARD_PATH} element={<Dashboard />} />
+          </Route>
         </Route>
 
         {/* All other paths */}

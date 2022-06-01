@@ -8,7 +8,7 @@ import useRefreshToken from './useRefreshToken';
  */
 const useAxiosPrivate = () => {
   // get a function for refreshin the access token
-  const refresh = useRefreshToken();
+  const refreshToken = useRefreshToken();
   const { authUser } = useAuth();
 
   useEffect(() => {
@@ -34,7 +34,7 @@ const useAxiosPrivate = () => {
         if (error?.response.status === 403 && !previousRequest?.sent) {
           // we want to prevent sending the request multiple times
           previousRequest.sent = true;
-          const newAccessToken = await refresh();
+          const newAccessToken = await refreshToken();
           previousRequest.headers[Header.Authorization] = getBearerTokenString(newAccessToken);
           // call the request again, but this time with the refreshed token
           return axiosPrivate(previousRequest);
@@ -49,7 +49,7 @@ const useAxiosPrivate = () => {
       axiosPrivate.interceptors.request.eject(requestIntercept);
       axiosPrivate.interceptors.response.eject(responseIntercept);
     };
-  }, [authUser, refresh]);
+  }, [authUser, refreshToken]);
 
   return axiosPrivate;
 };
