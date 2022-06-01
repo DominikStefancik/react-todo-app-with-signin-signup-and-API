@@ -3,7 +3,7 @@ import { axiosPrivate, getRequestConfig } from '../../../api/axios';
 import { API_TODOS_PATH } from '../../../api/url';
 import useAuth from '../../../hooks/useAuth';
 import { Title } from '../../styled/Title';
-import { Panel } from './styled/Panel';
+import { Panel } from '../styled/Panel';
 import TodoForm from './TodoForm';
 import TodoList from './TodoList';
 import { Item } from './types';

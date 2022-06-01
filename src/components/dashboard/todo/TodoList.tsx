@@ -3,7 +3,7 @@ import { axiosPrivate, getRequestConfig } from '../../../api/axios';
 import { API_TODOS_PATH } from '../../../api/url';
 import useAbortController from '../../../hooks/useAbortController';
 import useAuth from '../../../hooks/useAuth';
-import { TodoListPanel } from './styled/Panel';
+import { TodoListPanel } from '../styled/Panel';
 import TodoItem from './TodoItem';
 import { Item } from './types';
 

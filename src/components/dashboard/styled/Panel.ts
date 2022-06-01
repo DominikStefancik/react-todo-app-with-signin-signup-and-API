@@ -1,5 +1,5 @@
 import styled from 'styled-components';
-import { PanelProps } from '../../../types';
+import { PanelProps } from '../../types';
 
 export const Panel = styled.div<PanelProps>`
   position: absolute;
@@ -8,7 +8,7 @@ export const Panel = styled.div<PanelProps>`
   text-align: center;
   padding: 5px 25px 5px 25px;
   top: 0;
-  width: 95%;
+  width: ${(props) => props.width || '95%'};
   height: ${(props) => props.height};
   transform: ${(props) => `translate(${props.positionX || '10px'}, ${props.positionY || '55%'})`};
   right: 0;
