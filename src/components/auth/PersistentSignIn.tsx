@@ -24,7 +24,7 @@ const PersistentSignIn = () => {
     // run refreshing of the access token only when the user state is an empty object and we don have the access token
     // (e.g. that happens when a user refreshes the page)
     !authUser?.accessToken ? verifyRefreshToken() : setIsLoading(false);
-  }, []); // run the effect when the component loads[isLoading]);
+  }, []); // run the effect when the component loads;
 
   // the component <Outlet /> represents all child components nested inside the PersistentSignIn component
   return <>{isLoading ? <p>Loading ...</p> : <Outlet />}</>;
