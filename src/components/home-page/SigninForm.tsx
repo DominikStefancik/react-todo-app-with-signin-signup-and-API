@@ -1,5 +1,7 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faSpinner } from '@fortawesome/free-solid-svg-icons';
 import { Title } from '../styled/Title';
 import { Button } from '../styled/Button';
 import { LayoutProps } from '../types';
@@ -8,6 +10,7 @@ import axios from '../../api/axios';
 import { API_LOGIN_PATH } from '../../api/url';
 import useAuth from '../../hooks/useAuth';
 import { APP_DASHBOARD_PATH } from '../../url';
+import { SpinnerIcon } from '../styled/Icon';
 
 const SignInForm = ({ isSignInForm }: LayoutProps) => {
   // when we scuccessfully authenticate, we will set our new authUser state by calling the 'setAuthUser' function
@@ -22,8 +25,10 @@ const SignInForm = ({ isSignInForm }: LayoutProps) => {
 
   const [email, setEmail] = useState(''); // represents the email state
   const [password, setPassword] = useState(''); // represents the password state
-
   const [errorMessage, setErrorMessage] = useState(''); // represents a possible error message if an error exists
+
+  // represents the state when a page is loading a data (e.g. the form is waiting for the response from a backend)
+  const [isLoading, setIsLoading] = useState(false);
 
   // hook will be used to set the focus on the input field when the component loads
   useEffect(() => {
@@ -43,10 +48,12 @@ const SignInForm = ({ isSignInForm }: LayoutProps) => {
     setErrorMessage('');
   }, [isSignInForm]);
 
-  const isButtonDisabled = !email || !password;
+  const isButtonDisabled = isLoading || !email || !password;
 
   const handleSubmit = async (event: React.FormEvent) => {
     event.preventDefault();
+
+    setIsLoading(true);
 
     try {
       // send request to the backend
@@ -80,6 +87,9 @@ const SignInForm = ({ isSignInForm }: LayoutProps) => {
       }
       // when an error occured after submitting the form we want a focus to be on the error
       errorRef.current?.focus();
+    } finally {
+      // set the loading state to false after we received a response from a backend
+      setIsLoading(false);
     }
   };
 
@@ -109,6 +119,12 @@ const SignInForm = ({ isSignInForm }: LayoutProps) => {
         required
       />
       <Button disabled={isButtonDisabled}>Sign In</Button>
+
+      {isLoading && (
+        <SpinnerIcon>
+          <FontAwesomeIcon icon={faSpinner} pulse />
+        </SpinnerIcon>
+      )}
     </Form>
   );
 };

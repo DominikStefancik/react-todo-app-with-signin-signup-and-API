@@ -6,7 +6,8 @@ import { API_TODOS_PATH } from '../../../api/url';
 import useAbortController from '../../../hooks/useAbortController';
 import useAuth from '../../../hooks/useAuth';
 import { Item } from './types';
-import { EditableText, Form, Icon, Input, NonEditableText } from './styled/ItemForm';
+import { EditableText, Form, Input, NonEditableText } from './styled/ItemForm';
+import { Icon } from '../../styled/Icon';
 
 interface TodoItemProps {
   todoItem: Item;

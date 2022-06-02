@@ -34,9 +34,3 @@ export const NonEditableText = styled.s`
   border: none;
   font-size: 20px;
 `;
-
-export const Icon = styled.span`
-  margin-left: 10px;
-  font-size: 25px;
-  cursor: pointer;
-`;

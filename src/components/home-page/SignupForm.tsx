@@ -1,6 +1,6 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { faInfoCircle } from '@fortawesome/free-solid-svg-icons';
+import { faInfoCircle, faSpinner } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { LayoutProps } from '../types';
 import { APP_SIGNUP_SUCCESS_PATH } from '../../url';
@@ -9,6 +9,7 @@ import { Title } from '../styled/Title';
 import { Button } from '../styled/Button';
 import axios from '../../api/axios';
 import { API_REGISTER_PATH } from '../../api/url';
+import { SpinnerIcon } from '../styled/Icon';
 
 const NAME_REGEX = /^[a-zA-Z][a-zA-Z0-9-_ ]{2,149}$/;
 const PASSWORD_REGEX = /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%]).{8,24}$/;
@@ -48,6 +49,9 @@ const SignUpForm = ({ isSignInForm }: LayoutProps) => {
   const [confirmPasswordFocus, setConfirmPasswordFocus] = useState(false); // says if we have a focus on the input field or not
 
   const [errorMessage, setErrorMessage] = useState(''); // represents a possible error message if an error exists
+
+  // represents the state when a page is loading a data (e.g. the form is waiting for the response from a backend)
+  const [isLoading, setIsLoading] = useState(false);
 
   // hook will be used to set the focus on the input field when the component loads
   useEffect(() => {
@@ -99,6 +103,8 @@ const SignUpForm = ({ isSignInForm }: LayoutProps) => {
   const handleSubmit = async (event: React.FormEvent) => {
     event.preventDefault();
 
+    setIsLoading(true);
+
     try {
       // send request to the backend
       await axios.post(
@@ -127,6 +133,9 @@ const SignUpForm = ({ isSignInForm }: LayoutProps) => {
 
       // when an error occured after submitting the form we want a focus to be on the error
       errorRef.current?.focus();
+    } finally {
+      // set the loading state to false after we received a response from a backend
+      setIsLoading(false);
     }
   };
 
@@ -228,6 +237,12 @@ const SignUpForm = ({ isSignInForm }: LayoutProps) => {
       </Instructions>
 
       <Button disabled={isButtonDisabled}>Sign Up</Button>
+
+      {isLoading && (
+        <SpinnerIcon>
+          <FontAwesomeIcon icon={faSpinner} pulse />
+        </SpinnerIcon>
+      )}
     </Form>
   );
 };
